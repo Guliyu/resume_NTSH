@@ -5,34 +5,28 @@
 <style>
     /* 1. 基礎設定：營造一個平靜的閱讀氛圍 (滿版置中 Flexbox 維持不變) */
     body {
-    /* ***** 滿版和置中的 Flexbox 設定維持不變 ***** */
+    /* ... 滿版和置中的 Flexbox 設定維持不變 ... */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
-    /* 選擇一個能讓人心靜下來的淺灰色調，代表準備探索心靈 */
-    /* 刪除 background-color: #f4f7f9; */
-    
-    /* ***** 關鍵新增：紅綠淺色漸層背景 ***** */
-    /* 漸層方向：to bottom right (從左上到右下) */
-    /* 顏色選擇：*/
-    /* 綠色 (左上/0%) - #e0f2f1 (極淺的薄荷綠) */
-    /* 紅色 (右下/100%) - #ffebee (極淺的玫瑰紅/粉紅) */
     background: linear-gradient(to bottom right, #e0f2f1 0%, #ffebee 100%); 
-    /* ************************************** */
-
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
     margin: 0;
-    padding: 20px; 
+    
+    /* ***** 關鍵修改：讓左右邊距變小，但保留一點點 ***** */
+    /* 上下用 40px，左右用 15px (手機最適合的邊距) */
+    padding: 40px 15px; 
+    /* ************************************** */
 }
 
 /* ***** 關鍵新增：主容器 (讓整體內容不會佔滿超寬螢幕，但視覺上變大) ***** */
 .main-container {
-    width: 90%;             /* 讓容器寬度佔視窗的 90% */
-    max-width: 800px;       /* 但限制最大不要超過 800px (防止超寬螢幕太醜) */
+    width: 90%;             /* 讓容器寬度佔視窗的 90%，在手機上會盡量寬 */
+    max-width: 800px;       /* 限制電腦上的最大寬度 */
     text-align: center;
 }
 /* ************************************************************************** */
@@ -63,9 +57,12 @@ h1 {
 .nav-list {
     list-style: none; 
     padding: 0;
-    /* 讓列表佔滿容器寬度，但設定最大寬度，這樣按鈕不會太長 */
-    max-width: 550px;       /* 限制按鈕群組的最大寬度 */
-    margin: 50px auto 0 auto; /* 確保與 H1 的間距 */
+    
+    /* ***** 關鍵修改：讓按鈕群在手機上可以更寬 ***** */
+    max-width: 650px;       /* 將最大寬度調大，或是直接改成 100% */
+    /* *********************************************** */
+    
+    margin: 50px auto 0 auto; 
 }
 /* ... 剩下的 .nav-list li, a, a:hover 保持不變 ... */
 
