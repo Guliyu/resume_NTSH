@@ -2,69 +2,60 @@
 <html>
 <head>
     <title>讀書計畫</title>
-   <style>
-/* 步驟二：所有 CSS 樣式將會放在這裡 */
-
-/* 1. 基礎設定：營造一個平靜的閱讀氛圍 (已加入垂直置中和滿版化) */
+   /* 1. 基礎設定：營造一個平靜的閱讀氛圍 (滿版置中 Flexbox 維持不變) */
 body {
-    /* 選擇一個能讓人心靜下來的淺灰色調，代表準備探索心靈 */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 垂直置中 */
+    align-items: center;       /* 水平置中 */
+    
     background-color: #f4f7f9; 
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
     margin: 0;
-    padding: 20px; /* 稍微減少邊距，因為內容已經置中了 */
-
-    /* ***** 滿版和置中的關鍵改變 ***** */
-    min-height: 100vh;         /* 確保佔滿整個視窗的高度 (viewport height) */
-    display: flex;             /* 啟用 Flexbox */
-    flex-direction: column;    /* 讓內容垂直排列 (標題在上面，列表在下面) */
-    justify-content: center;   /* 讓內容在垂直軸上（上下）置中 */
-    align-items: center;       /* 讓內容在水平軸上（左右）置中 */
-    /* ***************************** */
+    padding: 20px; 
 }
 
-/* 2. 主標題：突出你的身份，但保持溫和 */
-h1 {
-    /* 核心顏色維持穩重 */
-    color: #2c3e50; 
-    font-size: 2.4em; 
-    font-weight: 700; 
-    
-    /* ***** 關鍵新增：讓框框裡面有顏色 ***** */
-    background-color: #e6f7ff; /* 選擇一個極淺的藍色，與主題漸層色呼應 */
-    padding: 20px 25px;       /* 增加上下左右的內距，讓背景色能顯示出來 */
-    border-radius: 8px;       /* 讓標題框框帶有圓角，更柔和 */
-    /* ************************************** */
-
-    margin-bottom: 50px; /* 將間距加大，留待第二個問題調整 */
-    
-    /* 讓文字置中，符合整個頁面風格 */
+/* ***** 關鍵新增：主容器 (讓整體內容不會佔滿超寬螢幕，但視覺上變大) ***** */
+.main-container {
+    width: 90%;             /* 讓容器寬度佔視窗的 90% */
+    max-width: 800px;       /* 但限制最大不要超過 800px (防止超寬螢幕太醜) */
     text-align: center;
-    
-    /* 移除橫條和陰影，因為有了背景色，就不需要重複的邊界了 */
-    /* border-bottom: none; */ 
-    /* box-shadow: none; */ 
+}
+/* ************************************************************************** */
 
-    /* 但為了保持立體感，我們新增一個更明顯的外部陰影 */
+/* 2. 主標題：突出你的身份 (移除寬度限制) */
+h1 {
+    color: #2c3e50; 
+    font-size: 2.4em;
+    font-weight: 700;
+    
+    /* 背景色與內距，讓標題成為一個淺藍色的橫幅框 */
+    background-color: #e6f7ff; 
+    padding: 20px 25px;       
+    border-radius: 8px;       
+    
+    /* 移除所有 max-width 和 margin-left/right: auto; */
+    margin-bottom: 50px; 
+    
+    text-align: center;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
-
-    /* 確保標題寬度不會佔滿整個螢幕，讓它更精緻 */
-    max-width: 500px;
-    margin-left: auto; 
-    margin-right: auto;
+    
+    /* 確保 h1 填滿整個容器寬度 */
+    width: 100%; 
+    box-sizing: border-box; /* 讓 padding 不會超出 width 100% */
 }
 
-/* 3. 列表容器：設定列表的樣式 */
+/* 3. 列表容器：設定列表的樣式 (讓按鈕群組佔滿容器寬度) */
 .nav-list {
-    list-style: none; /* 移除項目符號（圓點），讓它更像一個菜單 */
+    list-style: none; 
     padding: 0;
-    
-    /* ***** 關鍵修改：讓頂部間隔變大 ***** */
-    margin: 50px auto 0 auto; /* 讓頂部間隔增加到 50px，推開 H1 */
-    /* ************************************ */
-    
-    max-width: 600px; /* 限制寬度，讓列表看起來更優雅 */
+    /* 讓列表佔滿容器寬度，但設定最大寬度，這樣按鈕不會太長 */
+    max-width: 550px;       /* 限制按鈕群組的最大寬度 */
+    margin: 50px auto 0 auto; /* 確保與 H1 的間距 */
 }
+/* ... 剩下的 .nav-list li, a, a:hover 保持不變 ... */
 
 /* 4. 列表項目：讓每個選項看起來像一個可點擊的「選擇」 */
 .nav-list li {
@@ -96,6 +87,7 @@ h1 {
 
 </head>
 <body>
+    <div class="main-container">
     <h1>新北高中30815林韋溱</h1>
     
     <ul class="nav-list"> 
