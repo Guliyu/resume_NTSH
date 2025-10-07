@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +5,93 @@
     <script>
         function getResponse() {
             var input = document.getElementById("userInput").value;
-            document.getElementById("response").innerText = "AI 回應: " + input;
+            // 這裡可以讓 AI 的回應更像一點 (例如加上時間戳記或特別的提示詞)
+            document.getElementById("response").innerHTML = "🤖 AI 回應（<span style='color: #1e88e5;'>模擬</span>）: 「你輸入了：**" + input + "**」。這段關係需要進一步的**數據分析**才能做出精確判斷喔！";
         }
     </script>
+    <style>
+        /* 請將步驟一的所有 CSS 貼在這裡 */
+        body {
+            background-color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #1e88e5;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #1e88e5;
+            padding-bottom: 10px;
+        }
+
+        #userInput {
+            width: 80%;
+            max-width: 500px;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        #userInput:focus {
+            border-color: #1e88e5;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            background-color: #1e88e5; 
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            margin-bottom: 30px;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+            transform: translateY(-2px);
+        }
+
+        #response {
+            width: 80%;
+            max-width: 500px;
+            min-height: 50px;
+            padding: 20px;
+            font-size: 1.1em;
+            background-color: #e3f2fd; 
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 50px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #90a4ae;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #1e88e5;
+        }
+    </style>
 </head>
 <body>
     <h1>AI應用互動頁面</h1>
