@@ -5,13 +5,24 @@
 <style>
     /* 1. 基礎設定：營造一個平靜的閱讀氛圍 (滿版置中 Flexbox 維持不變) */
     body {
+    /* ***** 滿版和置中的 Flexbox 設定維持不變 ***** */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;   /* 垂直置中 */
-    align-items: center;       /* 水平置中 */
+    justify-content: center;
+    align-items: center;
     
-    background-color: #f4f7f9; 
+    /* 選擇一個能讓人心靜下來的淺灰色調，代表準備探索心靈 */
+    /* 刪除 background-color: #f4f7f9; */
+    
+    /* ***** 關鍵新增：紅綠淺色漸層背景 ***** */
+    /* 漸層方向：to bottom right (從左上到右下) */
+    /* 顏色選擇：*/
+    /* 綠色 (左上/0%) - #e0f2f1 (極淺的薄荷綠) */
+    /* 紅色 (右下/100%) - #ffebee (極淺的玫瑰紅/粉紅) */
+    background: linear-gradient(to bottom right, #e0f2f1 0%, #ffebee 100%); 
+    /* ************************************** */
+
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
     margin: 0;
