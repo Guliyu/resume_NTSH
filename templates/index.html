@@ -27,25 +27,30 @@ body {
 h1 {
     /* 核心顏色維持穩重 */
     color: #2c3e50; 
-    font-size: 2.4em; /* 稍微放大一點點 */
-    font-weight: 700; /* 加粗，增加視覺重量 */
-    margin-bottom: 30px; /* 縮小一點點間距，讓它更靠近橫條 */
-    padding-bottom: 15px; /* 增加底部內距，讓文字與橫條有呼吸空間 */
+    font-size: 2.4em; 
+    font-weight: 700; 
+    
+    /* ***** 關鍵新增：讓框框裡面有顏色 ***** */
+    background-color: #e6f7ff; /* 選擇一個極淺的藍色，與主題漸層色呼應 */
+    padding: 20px 25px;       /* 增加上下左右的內距，讓背景色能顯示出來 */
+    border-radius: 8px;       /* 讓標題框框帶有圓角，更柔和 */
+    /* ************************************** */
+
+    margin-bottom: 50px; /* 將間距加大，留待第二個問題調整 */
     
     /* 讓文字置中，符合整個頁面風格 */
     text-align: center;
     
-    /* 橫條的關鍵：邊框 */
-    /* 使用較細緻的線條，像是溫柔的界線 */
-    border-bottom: 3px solid #b0c4de; 
+    /* 移除橫條和陰影，因為有了背景色，就不需要重複的邊界了 */
+    /* border-bottom: none; */ 
+    /* box-shadow: none; */ 
 
-    /* 增加一點柔和的底部陰影來強調橫條，讓橫條看起來有層次感 */
-    /* 這裡使用一個微弱的陰影，避免太過突兀 */
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1); 
+    /* 但為了保持立體感，我們新增一個更明顯的外部陰影 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
 
     /* 確保標題寬度不會佔滿整個螢幕，讓它更精緻 */
     max-width: 500px;
-    margin-left: auto; /* 配合 max-width 讓 H1 區塊置中 */
+    margin-left: auto; 
     margin-right: auto;
 }
 
@@ -53,7 +58,11 @@ h1 {
 .nav-list {
     list-style: none; /* 移除項目符號（圓點），讓它更像一個菜單 */
     padding: 0;
-    margin: 30px auto 0 auto; /* 置中，並在頂部增加一些空間，與H1保持距離 */
+    
+    /* ***** 關鍵修改：讓頂部間隔變大 ***** */
+    margin: 50px auto 0 auto; /* 讓頂部間隔增加到 50px，推開 H1 */
+    /* ************************************ */
+    
     max-width: 600px; /* 限制寬度，讓列表看起來更優雅 */
 }
 
