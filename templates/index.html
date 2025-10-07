@@ -17,13 +17,28 @@ body {
 
 /* 2. 主標題：突出你的身份，但保持溫和 */
 h1 {
-    /* 溫暖、穩重的深藍色，像是堅定的信念 */
+    /* 核心顏色維持穩重 */
     color: #2c3e50; 
-    font-size: 2.2em;
-    margin-bottom: 50px;
-    padding-bottom: 10px;
-    /* 增加一點點柔和的底部陰影，不要像邊界一樣生硬 */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+    font-size: 2.4em; /* 稍微放大一點點 */
+    font-weight: 700; /* 加粗，增加視覺重量 */
+    margin-bottom: 30px; /* 縮小一點點間距，讓它更靠近橫條 */
+    padding-bottom: 15px; /* 增加底部內距，讓文字與橫條有呼吸空間 */
+    
+    /* 讓文字置中，符合整個頁面風格 */
+    text-align: center;
+    
+    /* 橫條的關鍵：邊框 */
+    /* 使用較細緻的線條，像是溫柔的界線 */
+    border-bottom: 3px solid #b0c4de; 
+
+    /* 增加一點柔和的底部陰影來強調橫條，讓橫條看起來有層次感 */
+    /* 這裡使用一個微弱的陰影，避免太過突兀 */
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1); 
+
+    /* 確保標題寬度不會佔滿整個螢幕，讓它更精緻 */
+    max-width: 500px;
+    margin-left: auto; /* 配合 max-width 讓 H1 區塊置中 */
+    margin-right: auto;
 }
 
 /* 3. 列表容器：設定列表的樣式 */
