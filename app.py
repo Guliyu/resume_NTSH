@@ -80,7 +80,7 @@ def ask_question():
             if a is None:
                 raise KeyError
         except KeyError:
-            a = f"抱歉，我目前對「{q}」的翻譯還沒有學習。這就像一段感情中，我們還沒對這個問題達成共識。"
+            a = f"抱歉，我目前對「{q}」還沒有學習。"
         
     # 渲染 ask.html
     return render_template('ask.html', question=q, answer=a)
