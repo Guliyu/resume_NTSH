@@ -88,23 +88,3 @@ def ask_question():
 # 啟動應用程式
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-# 首頁/的處理
-@app.route('/')
-def index():
-    return render_template('index.html', QA=questions_answers)
-
-# 網頁/ask的處理
-@app.route('/ask', methods=['GET', 'POST'])
-def ask_question():
-    if request.method == 'POST':
-        q = request.form['question']
-        a = questions_answers[q]
-        return render_template('ask.html', question=q, answer=a)
-    return render_template('ask.html', question="", answer="")
-
-if __name__ == '__main__':
-    app.run(debug=True)
