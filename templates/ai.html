@@ -36,7 +36,7 @@
         </div>`;
     
     // 發送到後端 AI API
-    fetch('/ai/chat', {
+    fetch('/ai', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -70,25 +70,6 @@
                 </div>
             </div>`;
     })
-    .catch(error => {
-        // 錯誤處理
-        document.getElementById("response").innerHTML = 
-            `<div class="ai-response error">
-                <div class="ai-header">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>連線錯誤</span>
-                </div>
-                <p>無法連接到AI服務，請稍後再試。</p>
-                <div class="ai-footer">
-                    <div class="timestamp">
-                        <i class="far fa-clock"></i>
-                        <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
-                    </div>
-                </div>
-            </div>`;
-        console.error('錯誤:', error);
-    });
-}
         
         // 按Enter鍵送出
         function handleKeyPress(event) {
