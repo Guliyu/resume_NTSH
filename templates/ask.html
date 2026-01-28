@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>智慧翻譯官</title>
     <style>
-        /* 所有 CSS 保持不變 */
+        /* 基礎設定 */
         * {
             margin: 0;
             padding: 0;
@@ -23,11 +23,227 @@
             align-items: center;
         }
 
-        /* ... (所有 CSS 樣式保持不變，只是複製過來) ... */
+        /* 主容器 */
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* 標頭 */
+        header {
+            text-align: center;
+            margin-bottom: clamp(25px, 5vw, 40px);
+            padding: clamp(15px, 3vw, 25px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* 表單區域 */
+        .form-box {
+            background: white;
+            padding: clamp(20px, 5vw, 35px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        /* 表單樣式 */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: clamp(12px, 3vw, 15px);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: clamp(0.95rem, 3vw, 1.05rem);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* 答案框特別樣式 */
+        #answer {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+            min-height: 60px;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            color: #4a5568;
+        }
+
+        /* 按鈕區 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            flex: 1;
+            padding: clamp(12px, 3vw, 16px);
+            border: none;
+            border-radius: 10px;
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        input[type="button"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        input[type="button"]:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .main-container {
+                padding: 10px;
+            }
+            
+            .form-box {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            input[type="submit"],
+            input[type="button"] {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .form-box {
+                padding: 15px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            input[type="text"] {
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+
+        /* 動畫效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-box {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 深色模式支援 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+                color: #e2e8f0;
+            }
+            
+            .form-box {
+                background: #2d3748;
+                color: #e2e8f0;
+            }
+            
+            label {
+                color: #cbd5e0;
+            }
+            
+            input[type="text"] {
+                background-color: #4a5568;
+                border-color: #718096;
+                color: #e2e8f0;
+            }
+            
+            #answer {
+                background-color: #4a5568;
+                color: #cbd5e0;
+            }
+        }
+
+        /* 載入狀態（可選） */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -40,45 +256,25 @@
         
         <section>
             <div class="form-box">
-                <form id="translation-form" action="/ask" method="post">
+                <form action="/ask" method="post">
                     <div class="form-group">
                         <label for="question">請輸入你想翻譯的文字：</label>
-                        <div class="input-container">
-                            <textarea id="question" name="question" 
-                                      rows="4"
-                                      placeholder="輸入中文或英文..."></textarea>
-                            <div class="char-count" id="question-count">0/1000</div>
-                        </div>
+                        <input type="text" id="question" name="question" 
+                               value="{{ question }}" 
+                               placeholder="輸入中文或英文..."
+                               autocomplete="off">
                     </div>
                     
-                    <!-- 載入動畫 -->
-                    <div class="loading-spinner" id="loading-spinner"></div>
-                    
-                    <!-- 翻譯結果區域 -->
-                    <div id="result-container" class="form-group" style="display: none;">
+                    <div class="form-group">
                         <label for="answer">翻譯結果：</label>
-                        <div class="result-container">
-                            <textarea id="answer" name="answer" 
-                                      rows="6"
-                                      readonly
-                                      placeholder="翻譯結果將顯示在這裡..."></textarea>
-                            <div class="char-count" id="answer-count">0/2000</div>
-                        </div>
-                        
-                        <!-- 額外的翻譯結果顯示區域 -->
-                        <div id="translation-result" class="translation-result" style="display: none;">
-                            <div class="result-header">
-                                <div class="result-title">翻譯結果</div>
-                                <button type="button" class="copy-btn" id="copy-btn">
-                                    <i class="far fa-copy"></i> 複製結果
-                                </button>
-                            </div>
-                            <div class="result-content" id="result-content"></div>
-                        </div>
+                        <input type="text" id="answer" name="answer" 
+                               readonly 
+                               value="{{ answer }}"
+                               placeholder="翻譯結果將顯示在這裡...">
                     </div>
                     
                     <div class="button-group">
-                        <input type="submit" value="開始翻譯" id="submit-btn">
+                        <input type="submit" value="開始翻譯">
                         <input type="button" value="返回首頁" onclick="window.location.href='/'">
                     </div>
                 </form>
@@ -87,152 +283,20 @@
     </div>
 
     <script>
-        // DOM 元素
-        const questionInput = document.getElementById('question');
-        const answerInput = document.getElementById('answer');
-        const questionCount = document.getElementById('question-count');
-        const answerCount = document.getElementById('answer-count');
-        const translationForm = document.getElementById('translation-form');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const submitBtn = document.getElementById('submit-btn');
-        const resultContainer = document.getElementById('result-container');
-        const translationResult = document.getElementById('translation-result');
-        const resultContent = document.getElementById('result-content');
-        const copyBtn = document.getElementById('copy-btn');
-        
-        // 模擬翻譯結果（長文本示例）
-        const longTranslationExample = `智慧翻譯官不僅僅是一個簡單的文字轉換工具，它是一個能夠理解語境、捕捉情感、傳達文化內涵的智能助手。當您輸入一段文字時，我們的系統會分析其深層含義，考慮上下文關係，並結合文化背景知識，提供最自然、最準確的翻譯結果。
-        
-我們採用了先進的神經機器翻譯技術，結合深度學習算法，能夠處理各種複雜的語言結構。無論是文學作品中的詩意表達，還是專業文獻中的術語翻譯，智慧翻譯官都能勝任。
-
-主要特點：
-• 上下文感知翻譯
-• 多語言支持
-• 文化敏感度調整
-• 行業術語精準翻譯
-• 即時翻譯結果
-• 可自訂翻譯風格
-
-使用智慧翻譯官，您獲得的將不僅僅是字面上的翻譯，而是真正傳達原意的優美表達。`;
-
-        // 初始化字數統計
-        updateCharCount(questionInput, questionCount, 1000);
-        updateCharCount(answerInput, answerCount, 2000);
-        
-        // 自動調整文本區域高度
-        autoResizeTextarea(questionInput);
-        autoResizeTextarea(answerInput);
-        
-        // 字數統計函數
-        function updateCharCount(textarea, countElement, maxLength) {
-            const length = textarea.value.length;
-            countElement.textContent = `${length}/${maxLength}`;
-            
-            // 如果接近或超過最大長度，改變顏色
-            if (length > maxLength * 0.9) {
-                countElement.style.color = length > maxLength ? '#e53e3e' : '#d69e2e';
-            } else {
-                countElement.style.color = '#718096';
+        // 簡單的載入狀態（可選）
+        document.querySelector('form').addEventListener('submit', function() {
+            if (document.querySelector('#question').value.trim()) {
+                this.classList.add('loading');
+                document.querySelector('input[type="submit"]').value = '翻譯中...';
             }
-        }
-        
-        // 自動調整文本區域高度
-        function autoResizeTextarea(textarea) {
-            textarea.style.height = 'auto';
-            const newHeight = Math.min(textarea.scrollHeight, 400);
-            textarea.style.height = newHeight + 'px';
-        }
-        
-        // 事件監聽器
-        questionInput.addEventListener('input', function() {
-            updateCharCount(this, questionCount, 1000);
-            autoResizeTextarea(this);
-        });
-        
-        answerInput.addEventListener('input', function() {
-            updateCharCount(this, answerCount, 2000);
-            autoResizeTextarea(this);
-        });
-        
-        // 表單提交處理
-        translationForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const question = questionInput.value.trim();
-            if (!question) {
-                alert('請輸入要翻譯的文字！');
-                questionInput.focus();
-                return;
-            }
-            
-            // 顯示載入狀態
-            submitBtn.value = '翻譯中...';
-            submitBtn.classList.add('loading');
-            loadingSpinner.style.display = 'block';
-            resultContainer.style.display = 'none';
-            translationResult.style.display = 'none';
-            
-            // 模擬API呼叫延遲
-            setTimeout(() => {
-                // 這裡應該是實際的API呼叫
-                // 為了演示，我們使用模擬數據
-                const mockAnswer = longTranslationExample;
-                
-                // 更新答案
-                answerInput.value = mockAnswer;
-                resultContent.textContent = mockAnswer;
-                
-                // 更新字數統計
-                updateCharCount(answerInput, answerCount, 2000);
-                autoResizeTextarea(answerInput);
-                
-                // 顯示結果區域
-                resultContainer.style.display = 'block';
-                translationResult.style.display = 'block';
-                
-                // 恢復按鈕狀態
-                submitBtn.value = '開始翻譯';
-                submitBtn.classList.remove('loading');
-                loadingSpinner.style.display = 'none';
-                
-                // 滾動到結果區域
-                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 1500);
-        });
-        
-        // 複製結果功能
-        copyBtn.addEventListener('click', function() {
-            const textToCopy = answerInput.value || resultContent.textContent;
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // 顯示成功訊息
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> 已複製！';
-                copyBtn.style.background = '#38a169';
-                
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                    copyBtn.style.background = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('複製失敗: ', err);
-                alert('複製失敗，請手動選取並複製文字');
-            });
         });
         
         // 自動聚焦到輸入框
         window.onload = function() {
-            questionInput.focus();
+            if (!"{{ question }}") {
+                document.getElementById('question').focus();
+            }
         };
-        
-        // 視窗大小改變時重新調整文本區域
-        window.addEventListener('resize', function() {
-            autoResizeTextarea(questionInput);
-            autoResizeTextarea(answerInput);
-        });
     </script>
-    
-    <!-- Font Awesome 圖示庫 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>
