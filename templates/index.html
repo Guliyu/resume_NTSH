@@ -2,96 +2,159 @@
 <html>
 <head>
     <title>讀書計畫</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    /* 1. 基礎設定：營造一個平靜的閱讀氛圍 (滿版置中 Flexbox 維持不變) */
+    /* 1. 基礎設定：營造一個平靜的閱讀氛圍 */
     body {
-    /* ... 滿版和置中的 Flexbox 設定維持不變 ... */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    background: linear-gradient(to bottom right, #e0f2f1 0%, #ffebee 100%); 
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: #333;
-    margin: 0;
-    
-    /* ***** 關鍵修改：讓左右邊距變小，但保留一點點 ***** */
-    /* 上下用 40px，左右用 15px (手機最適合的邊距) */
-    padding: 40px 15px; 
-    /* ************************************** */
-}
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to bottom right, #e0f2f1 0%, #ffebee 100%); 
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 20px 15px; /* 手機上減少上下邊距 */
+        box-sizing: border-box;
+    }
 
-/* ***** 關鍵新增：主容器 (讓整體內容不會佔滿超寬螢幕，但視覺上變大) ***** */
-.main-container {
-    width: 90%;             /* 讓容器寬度佔視窗的 90%，在手機上會盡量寬 */
-    max-width: 800px;       /* 限制電腦上的最大寬度 */
-    text-align: center;
-}
-/* ************************************************************************** */
+    /* 主容器 */
+    .main-container {
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+    }
 
-/* 2. 主標題：突出你的身份 (移除寬度限制) */
-h1 {
-    color: #2c3e50; 
-    font-size: 2.4em;
-    font-weight: 700;
-    
-    /* 背景色與內距，讓標題成為一個淺藍色的橫幅框 */
-    background-color: #e6f7ff; 
-    padding: 20px 25px;       
-    border-radius: 8px;       
-    
-    /* 移除所有 max-width 和 margin-left/right: auto; */
-    margin-bottom: 50px; 
-    
-    text-align: center;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
-    
-    /* 確保 h1 填滿整個容器寬度 */
-    width: 100%; 
-    box-sizing: border-box; /* 讓 padding 不會超出 width 100% */
-}
+    /* 2. 主標題：響應式設計 */
+    h1 {
+        color: #2c3e50; 
+        font-size: clamp(1.8rem, 4vw, 2.4rem); /* 響應式字體大小 */
+        font-weight: 700;
+        background-color: #e6f7ff; 
+        padding: clamp(15px, 3vw, 20px) clamp(15px, 4vw, 25px); /* 響應式內距 */
+        border-radius: 8px;
+        margin-bottom: clamp(30px, 5vw, 50px); /* 響應式邊距 */
+        text-align: center;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
+        width: 100%; 
+        box-sizing: border-box;
+        word-break: keep-all; /* 防止文字斷行 */
+    }
 
-/* 3. 列表容器：設定列表的樣式 (讓按鈕群組佔滿容器寬度) */
-.nav-list {
-    list-style: none; 
-    padding: 0;
-    
-    /* ***** 關鍵修改：讓按鈕群在手機上可以更寬 ***** */
-    max-width: 650px;       /* 將最大寬度調大，或是直接改成 100% */
-    /* *********************************************** */
-    
-    margin: 50px auto 0 auto; 
-}
-/* ... 剩下的 .nav-list li, a, a:hover 保持不變 ... */
+    /* 3. 列表容器 */
+    .nav-list {
+        list-style: none; 
+        padding: 0;
+        margin: clamp(30px, 5vw, 50px) auto 0 auto; /* 響應式邊距 */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* 使用 gap 替代 margin-bottom */
+    }
 
-/* 4. 列表項目：讓每個選項看起來像一個可點擊的「選擇」 */
-.nav-list li {
-    margin-bottom: 15px;
-}
+    /* 4. 列表項目 */
+    .nav-list li {
+        width: 100%;
+    }
 
-/* 5. 連結（真正的按鈕）：這是情感的核心，我們要讓它有吸引力！ */
-.nav-list a {
-    text-decoration: none;
-    display: block; /* 讓整個區塊都可以點擊 */
-    padding: 15px 25px;
-    /* 選擇一個帶有**希望**和**活力**的漸層色，代表每個經歷都是充滿可能性的 */
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
-    color: white;
-    font-weight: bold;
-    border-radius: 8px; /* 柔和的圓角 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 增加一點點立體感 */
-    transition: all 0.3s ease; /* 讓互動效果更平滑 */
-}
+    /* 5. 連結（按鈕）：響應式設計 */
+    .nav-list a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(14px, 3vw, 18px) clamp(10px, 3vw, 25px);
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+        
+        /* 響應式字體大小 */
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        text-align: center;
+        min-height: 50px; /* 確保按鈕有最小高度 */
+        
+        /* 防止文字斷行，確保按鈕內文字單行顯示 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-/* 6. 懸停效果：當滑鼠移上去時的甜蜜互動（讓它變亮一點） */
-.nav-list a:hover {
-    /* 懸停時，背景變為更深或更亮一點，像感情的升溫 */
-    background: linear-gradient(135deg, #1c88e5 0%, #00e5f2 100%); 
-    transform: translateY(-3px); /* 向上輕微移動，表示被重視 */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
+    /* 6. 懸停效果 */
+    .nav-list a:hover {
+        background: linear-gradient(135deg, #1c88e5 0%, #00e5f2 100%); 
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 7. 觸控設備優化 */
+    @media (hover: none) {
+        .nav-list a:active {
+            background: linear-gradient(135deg, #1c88e5 0%, #00e5f2 100%); 
+            transform: translateY(-1px);
+        }
+    }
+
+    /* 8. 手機專用調整 */
+    @media (max-width: 480px) {
+        body {
+            padding: 15px 10px;
+            justify-content: flex-start; /* 手機上從頂部開始 */
+            padding-top: 40px;
+        }
+        
+        .nav-list {
+            gap: 10px;
+        }
+        
+        .nav-list a {
+            white-space: normal; /* 手機上允許文字換行 */
+            min-height: 44px; /* 符合觸控最佳實踐 */
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+    }
+
+    /* 9. 平板調整 */
+    @media (min-width: 481px) and (max-width: 768px) {
+        .nav-list a {
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    /* 10. 電腦大螢幕優化 */
+    @media (min-width: 1200px) {
+        .main-container {
+            max-width: 900px;
+        }
+        
+        .nav-list {
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
 </style>
 </head>
     
