@@ -41,7 +41,8 @@ def ai():
         return render_template('ai.html')
     
     # POST 請求處理 AI
-    user_input = request.json.get('question', '').strip()
+    data = request.get_json(silent=True) or {}
+user_input = data.get('question', '').strip()
     
     if not user_input:
         return jsonify({"answer": "歡迎……"})
@@ -70,8 +71,8 @@ def ai():
 
     try:
         response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
         result = response.json()
-        answer = result['choices'][0]['message']['content']
         return jsonify({"answer": answer})
     except Exception as e:
         return jsonify({"answer": f"哎呀，AI 鬧脾氣了：{str(e)}"})
