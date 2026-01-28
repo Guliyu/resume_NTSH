@@ -1,103 +1,649 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-    <title>AI應用</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI應用 | 互動頁面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         function getResponse() {
             var input = document.getElementById("userInput").value;
-            // 這裡可以讓 AI 的回應更像一點 (例如加上時間戳記或特別的提示詞)
-            document.getElementById("response").innerHTML = "🤖 AI 回應（<span style='color: #1e88e5;'>模擬</span>）: 「你輸入了：**" + input + "**」。這段關係需要進一步的**數據分析**才能做出精確判斷喔！";
+            
+            if (input.trim() === "") {
+                document.getElementById("response").innerHTML = 
+                    `<div class="ai-response error">
+                        <div class="ai-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>輸入錯誤</span>
+                        </div>
+                        <p>請輸入一些內容來獲得AI的回應！</p>
+                    </div>`;
+                return;
+            }
+            
+            // 模擬AI思考過程
+            document.getElementById("response").innerHTML = 
+                `<div class="ai-response thinking">
+                    <div class="ai-header">
+                        <i class="fas fa-brain"></i>
+                        <span>AI思考中...</span>
+                    </div>
+                    <div class="thinking-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>`;
+            
+            // 模擬AI處理時間
+            setTimeout(() => {
+                // 預設回應
+                const responses = [
+                    "根據我的分析，您輸入的「" + input + "」需要進一步的**數據處理**才能做出準確判斷。建議提供更多相關上下文。",
+                    "我理解您提到了「" + input + "」。從我的知識庫來看，這個主題涉及多個維度，需要更詳細的參數才能給出精確建議。",
+                    "關於「" + input + "」的查詢，我的初步分析顯示這是一個值得深入探討的主題。您可以嘗試提供更多具體細節以獲得更有針對性的回答。",
+                    "您輸入的「" + input + "」觸發了我的語言理解模型。根據現有數據，我建議從三個角度來分析這個問題：技術實現、應用場景和潛在影響。"
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                document.getElementById("response").innerHTML = 
+                    `<div class="ai-response">
+                        <div class="ai-header">
+                            <i class="fas fa-robot"></i>
+                            <span>AI 回應</span>
+                            <span class="ai-tag">深度分析</span>
+                        </div>
+                        <p>${randomResponse}</p>
+                        <div class="ai-footer">
+                            <div class="confidence">
+                                <span>分析置信度:</span>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" style="width: ${75 + Math.random() * 20}%"></div>
+                                </div>
+                            </div>
+                            <div class="timestamp">
+                                <i class="far fa-clock"></i>
+                                <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
+                            </div>
+                        </div>
+                    </div>`;
+            }, 1200 + Math.random() * 1500);
         }
+        
+        // 按Enter鍵送出
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                getResponse();
+            }
+        }
+        
+        // 載入時添加示例問題
+        window.onload = function() {
+            const examples = [
+                "如何開始機器學習專案？",
+                "自然語言處理的應用有哪些？",
+                "深度學習與機器學習的差異",
+                "AI在醫療領域的最新發展"
+            ];
+            
+            const exampleElement = document.getElementById("examples");
+            examples.forEach(example => {
+                const span = document.createElement("span");
+                span.className = "example";
+                span.textContent = example;
+                span.onclick = function() {
+                    document.getElementById("userInput").value = example;
+                };
+                exampleElement.appendChild(span);
+            });
+        };
     </script>
     <style>
-        /* 請將步驟一的所有 CSS 貼在這裡 */
-        body {
-            background-color: #ffffff; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+        /* 基礎樣式與變數 */
+        :root {
+            --primary-color: #1e88e5;
+            --primary-dark: #1565c0;
+            --primary-light: #e3f2fd;
+            --secondary-color: #7e57c2;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #777777;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+        
+        /* 深色模式變數 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-dark: #f1f5f9;
+                --text-medium: #cbd5e1;
+                --text-light: #94a3b8;
+                --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
+                --primary-light: #1e3a8a;
+            }
+        }
+        
+        * {
             margin: 0;
-            padding: 40px 20px;
-            display: flex; 
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Microsoft JhengHei', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            transition: var(--transition);
         }
-
-        h1 {
-            color: #1e88e5;
-            font-size: 2.5em;
+        
+        /* 容器 */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* 標題區域 */
+        .header {
+            text-align: center;
             margin-bottom: 40px;
-            border-bottom: 3px solid #1e88e5;
-            padding-bottom: 10px;
+            width: 100%;
         }
-
-        #userInput {
-            width: 80%;
-            max-width: 500px;
-            padding: 15px;
-            font-size: 1.1em;
-            border: 2px solid #ccc;
-            border-radius: 8px;
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 20px;
-            transition: border-color 0.3s;
         }
-
-        #userInput:focus {
-            border-color: #1e88e5;
-            outline: none;
-        }
-
-        button {
-            padding: 12px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
             color: white;
-            background-color: #1e88e5; 
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.2s;
-            margin-bottom: 30px;
+            box-shadow: var(--shadow);
         }
-
+        
+        h1 {
+            color: var(--text-dark);
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            color: var(--text-medium);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 輸入區域 */
+        .input-section {
+            width: 100%;
+            max-width: 700px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        #userInput {
+            width: 100%;
+            padding: 20px 20px 20px 55px;
+            font-size: 1.1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+        
+        #userInput:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.3rem;
+        }
+        
+        /* 按鈕 */
+        .button-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
         button:hover {
-            background-color: #1565c0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        .secondary-btn {
+            background: linear-gradient(to right, #6b7280, #4b5563);
+        }
+        
+        .secondary-btn:hover {
+            box-shadow: 0 8px 20px rgba(107, 114, 128, 0.3);
+        }
+        
+        /* 範例區域 */
+        .examples {
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+        
+        .examples h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .examples-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .example {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid rgba(30, 136, 229, 0.2);
+        }
+        
+        .example:hover {
+            background-color: var(--primary-color);
+            color: white;
             transform: translateY(-2px);
         }
-
-        #response {
-            width: 80%;
-            max-width: 500px;
-            min-height: 50px;
-            padding: 20px;
-            font-size: 1.1em;
-            background-color: #e3f2fd; 
-            border: 1px solid #bbdefb;
-            border-radius: 8px;
-            text-align: left;
-            word-wrap: break-word;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 50px;
+        
+        /* AI回應區域 */
+        .response-section {
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 40px;
         }
-
-        a {
+        
+        .ai-response {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .ai-header i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .ai-header span:first-of-type {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+        }
+        
+        .ai-tag {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .ai-response p {
+            font-size: 1.15rem;
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .ai-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .confidence {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .confidence-bar {
+            width: 120px;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            border-radius: 4px;
+        }
+        
+        .timestamp {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 思考動畫 */
+        .thinking .ai-header i {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .thinking-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .thinking-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .thinking-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+        
+        .thinking-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        /* 錯誤狀態 */
+        .error .ai-header i {
+            color: #ef4444;
+        }
+        
+        /* 返回連結 */
+        .back-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .back-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-medium);
             text-decoration: none;
-            color: #90a4ae;
-            font-size: 0.9em;
-            transition: color 0.3s;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
         }
-
-        a:hover {
-            color: #1e88e5;
+        
+        .back-link a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .input-section {
+                padding: 25px 20px;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            button {
+                min-width: 100%;
+            }
+            
+            .examples-container {
+                justify-content: center;
+            }
+            
+            .ai-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            #userInput {
+                padding: 16px 16px 16px 50px;
+                font-size: 1rem;
+            }
+            
+            .ai-response {
+                padding: 20px;
+            }
+            
+            .ai-header {
+                flex-wrap: wrap;
+            }
+        }
+        
+        /* 載入動畫 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <h1>AI應用互動頁面</h1>
-    <input type="text" id="userInput" placeholder="請輸入內容">
-    <button onclick="getResponse()">送出</button>
-    <p id="response"></p>
-    <a href="/">返回首頁</a>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h1>AI應用互動平台</h1>
+            </div>
+            <p class="subtitle">體驗與AI對話的力量。輸入您的問題，獲得智能分析與回應。</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-container">
+                <i class="fas fa-comment-dots input-icon"></i>
+                <input type="text" id="userInput" placeholder="請輸入您的問題或主題..." onkeypress="handleKeyPress(event)">
+            </div>
+            
+            <div class="button-container">
+                <button onclick="getResponse()">
+                    <i class="fas fa-paper-plane"></i>
+                    獲得AI回應
+                </button>
+                <button class="secondary-btn" onclick="document.getElementById('userInput').value = ''">
+                    <i class="fas fa-redo"></i>
+                    清除內容
+                </button>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h3><i class="fas fa-lightbulb"></i> 試試這些範例問題：</h3>
+            <div class="examples-container" id="examples">
+                <!-- 範例問題會由JS動態生成 -->
+            </div>
+        </div>
+        
+        <div class="response-section">
+            <div id="response">
+                <div class="ai-response">
+                    <div class="ai-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI助手已就緒</span>
+                        <span class="ai-tag">等待輸入</span>
+                    </div>
+                    <p>您好！我是您的AI助手，準備為您提供分析與見解。請在上方輸入框中輸入您的問題或主題，然後點擊「獲得AI回應」按鈕。</p>
+                    <div class="ai-footer">
+                        <div class="confidence">
+                            <span>系統狀態:</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="timestamp">
+                            <i class="far fa-clock"></i>
+                            <span>就緒中</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="/">
+                <i class="fas fa-arrow-left"></i>
+                返回首頁
+            </a>
+        </div>
+    </div>
 </body>
 </html>
