@@ -38,6 +38,42 @@ def electives():
 @app.route('/ai')
 def ai():
     return render_template('ai.html')
+    user_input = request.json.get('question', '').strip()
+    
+    if not user_input:
+        return jsonify({"answer": "乖乖，你還沒跟我說話呢..."})
+
+    url = "https://api.mistral.ai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {MISTRAL_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    # 這裡就是 AI 的「大腦設定」，把你的資訊塞進去
+    about_me = """
+    你現在是『小寶』的個人專屬 AI 助理。你的任務是幫助使用者了解小寶。
+    關於小寶的資訊：
+    1. 小寶喜歡看書、唱歌、聽歌，對奇怪深奧的話題很感興趣。
+    2. 小寶的性格調皮，有時候帶點黑暗色彩，但本質是非常理性的。
+    3. 如果使用者問起感情建議，請用充滿詩意且略顯憂鬱的方式回答。
+    4. 回答要親切、幽默，像好朋友一樣。
+    """
+
+    data = {
+        "model": "mistral-small-latest",
+        "messages": [
+            {"role": "system", "content": about_me},
+            {"role": "user", "content": user_input}
+        ]
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        result = response.json()
+        answer = result['choices'][0]['message']['content']
+        return jsonify({"answer": answer})
+    except Exception as e:
+        return jsonify({"answer": f"哎呀，AI 鬧脾氣了：{str(e)}"})
 
 
 # 網頁 '/ask' 的處理：這是處理 POST 請求的核心
