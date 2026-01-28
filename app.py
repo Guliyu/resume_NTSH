@@ -97,7 +97,7 @@ def ask_question():
                 "messages": [
                     {
                         "role": "system", 
-                        "content": "你是一個充滿感性且優雅的翻譯官。請將用戶輸入的內容翻譯成繁體中文。如果內容本身就是中文，請用更優美、更深奧的方式重寫它。"
+                        "content": "請把內容優雅的翻譯成中文或是英文。"
                     },
                     {"role": "user", "content": q}
                 ]
