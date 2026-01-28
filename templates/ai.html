@@ -7,69 +7,88 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         function getResponse() {
-            var input = document.getElementById("userInput").value;
-            
-            if (input.trim() === "") {
-                document.getElementById("response").innerHTML = 
-                    `<div class="ai-response error">
-                        <div class="ai-header">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>輸入錯誤</span>
+    var input = document.getElementById("userInput").value;
+    
+    if (input.trim() === "") {
+        document.getElementById("response").innerHTML = 
+            `<div class="ai-response error">
+                <div class="ai-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>輸入錯誤</span>
+                </div>
+                <p>請輸入一些內容來獲得AI的回應！</p>
+            </div>`;
+        return;
+    }
+    
+    // 顯示思考動畫
+    document.getElementById("response").innerHTML = 
+        `<div class="ai-response thinking">
+            <div class="ai-header">
+                <i class="fas fa-brain"></i>
+                <span>AI思考中...</span>
+            </div>
+            <div class="thinking-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>`;
+    
+    // 發送到後端 AI API
+    fetch('/ai/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            question: input
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 成功收到回應
+        document.getElementById("response").innerHTML = 
+            `<div class="ai-response">
+                <div class="ai-header">
+                    <i class="fas fa-robot"></i>
+                    <span>AI 回應</span>
+                    <span class="ai-tag">深度分析</span>
+                </div>
+                <p>${data.answer}</p>
+                <div class="ai-footer">
+                    <div class="confidence">
+                        <span>分析置信度:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${85 + Math.random() * 10}%"></div>
                         </div>
-                        <p>請輸入一些內容來獲得AI的回應！</p>
-                    </div>`;
-                return;
-            }
-            
-            // 模擬AI思考過程
-            document.getElementById("response").innerHTML = 
-                `<div class="ai-response thinking">
-                    <div class="ai-header">
-                        <i class="fas fa-brain"></i>
-                        <span>AI思考中...</span>
                     </div>
-                    <div class="thinking-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                    <div class="timestamp">
+                        <i class="far fa-clock"></i>
+                        <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
-                </div>`;
-            
-            // 模擬AI處理時間
-            setTimeout(() => {
-                // 預設回應
-                const responses = [
-                    "根據我的分析，您輸入的「" + input + "」需要進一步的**數據處理**才能做出準確判斷。建議提供更多相關上下文。",
-                    "我理解您提到了「" + input + "」。從我的知識庫來看，這個主題涉及多個維度，需要更詳細的參數才能給出精確建議。",
-                    "關於「" + input + "」的查詢，我的初步分析顯示這是一個值得深入探討的主題。您可以嘗試提供更多具體細節以獲得更有針對性的回答。",
-                    "您輸入的「" + input + "」觸發了我的語言理解模型。根據現有數據，我建議從三個角度來分析這個問題：技術實現、應用場景和潛在影響。"
-                ];
-                
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                
-                document.getElementById("response").innerHTML = 
-                    `<div class="ai-response">
-                        <div class="ai-header">
-                            <i class="fas fa-robot"></i>
-                            <span>AI 回應</span>
-                            <span class="ai-tag">深度分析</span>
-                        </div>
-                        <p>${randomResponse}</p>
-                        <div class="ai-footer">
-                            <div class="confidence">
-                                <span>分析置信度:</span>
-                                <div class="confidence-bar">
-                                    <div class="confidence-fill" style="width: ${75 + Math.random() * 20}%"></div>
-                                </div>
-                            </div>
-                            <div class="timestamp">
-                                <i class="far fa-clock"></i>
-                                <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
-                            </div>
-                        </div>
-                    </div>`;
-            }, 1200 + Math.random() * 1500);
-        }
+                </div>
+            </div>`;
+    })
+    .catch(error => {
+        // 錯誤處理
+        document.getElementById("response").innerHTML = 
+            `<div class="ai-response error">
+                <div class="ai-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>連線錯誤</span>
+                </div>
+                <p>無法連接到AI服務，請稍後再試。</p>
+                <div class="ai-footer">
+                    <div class="timestamp">
+                        <i class="far fa-clock"></i>
+                        <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                </div>
+            </div>`;
+        console.error('錯誤:', error);
+    });
+}
         
         // 按Enter鍵送出
         function handleKeyPress(event) {
