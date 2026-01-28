@@ -35,9 +35,12 @@ def club():
 def electives():
     return render_template('electives.html')
 
-@app.route('/ai')
+@app.route('/ai', methods=['GET', 'POST'])
 def ai():
-    return render_template('ai.html')
+    if request.method == 'GET':
+        return render_template('ai.html')
+    
+    # POST 請求處理 AI
     user_input = request.json.get('question', '').strip()
     
     if not user_input:
@@ -49,7 +52,6 @@ def ai():
         "Content-Type": "application/json"
     }
     
-    # 這裡就是 AI 的「大腦設定」，把你的資訊塞進去
     about_me = """
     你的任務是幫助使用者了解「我」。回答親切、像好友一樣
     - 特質：理性、穩定、有創新想法
