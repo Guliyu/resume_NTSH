@@ -41,7 +41,7 @@ def ai():
     user_input = request.json.get('question', '').strip()
     
     if not user_input:
-        return jsonify({"answer": "乖乖，你還沒跟我說話呢..."})
+        return jsonify({"answer": "歡迎……"})
 
     url = "https://api.mistral.ai/v1/chat/completions"
     headers = {
@@ -110,7 +110,7 @@ def ask_question():
                 # 取得 AI 回傳的翻譯文字
                 a = result['choices'][0]['message']['content']
             except Exception as e:
-                a = f"抱歉，小寶，連線出了點問題：{str(e)}"
+                a = f"抱歉，連線出了點問題：{str(e)}"
         else:
             a = "你什麼都沒說，我該怎麼讀懂你的心呢？"
         
