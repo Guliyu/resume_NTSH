@@ -42,7 +42,7 @@ def ai():
     
     # POST 請求處理 AI
     data = request.get_json(silent=True) or {}
-user_input = data.get('question', '').strip()
+    user_input = data.get('question', '').strip()
     
     if not user_input:
         return jsonify({"answer": "歡迎……"})
@@ -82,15 +82,14 @@ user_input = data.get('question', '').strip()
 # 網頁 '/ask' 的處理：這是處理 POST 請求的核心
 @app.route('/ask', methods=['GET', 'POST'])
 def ask_question():
-    q = ""  # 使用者輸入的原文
-    a = ""  # AI 翻譯後的結果
+    q = ""
+    a = ""
 
     if request.method == 'POST':
-        # 取得前端表單傳過來的 "question" 欄位
+        # 這是處理 HTML Form 傳來的資料
         q = request.form.get('question', '').strip()
         
         if q:
-            # 準備呼叫 Mistral API
             url = "https://api.mistral.ai/v1/chat/completions"
             headers = {
                 "Authorization": f"Bearer {MISTRAL_API_KEY}",
@@ -99,10 +98,7 @@ def ask_question():
             data = {
                 "model": "mistral-small-latest",
                 "messages": [
-                    {
-                        "role": "system", 
-                        "content": "請把內容翻譯成中文或是英文。"
-                    },
+                    {"role": "system", "content": "請把內容翻譯成中文或是英文。"},
                     {"role": "user", "content": q}
                 ]
             }
@@ -111,15 +107,13 @@ def ask_question():
                 response = requests.post(url, headers=headers, json=data, timeout=10)
                 response.raise_for_status()
                 result = response.json()
-                # 取得 AI 回傳的翻譯文字
                 a = result['choices'][0]['message']['content']
             except Exception as e:
                 a = f"抱歉，連線出了點問題：{str(e)}"
         else:
             a = "你什麼都沒說，我該怎麼讀懂你的心呢？"
         
-    # 一樣回傳給 ask.html，這樣你連 HTML 都不用大改
     return render_template('ask.html', question=q, answer=a)
-# 啟動應用程式
+
 if __name__ == '__main__':
     app.run(debug=True)
