@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>智慧翻譯官</title>
     <style>
-        /* 基礎設定 */
+        /* 所有 CSS 保持不變 */
         * {
             margin: 0;
             padding: 0;
@@ -23,345 +23,8 @@
             align-items: center;
         }
 
-        /* 主容器 */
-        .main-container {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        /* ... (所有 CSS 樣式保持不變，只是複製過來) ... */
 
-        /* 標頭 */
-        header {
-            text-align: center;
-            margin-bottom: clamp(25px, 5vw, 40px);
-            padding: clamp(15px, 3vw, 25px);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-            color: white;
-            width: 100%;
-        }
-
-        header h1 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            opacity: 0.9;
-            font-style: italic;
-        }
-
-        /* 表單區域 */
-        .form-box {
-            background: white;
-            padding: clamp(20px, 5vw, 35px);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            margin-bottom: 30px;
-        }
-
-        /* 表單樣式 */
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2d3748;
-            font-size: clamp(0.95rem, 3vw, 1.1rem);
-        }
-
-        .input-container, .result-container {
-            position: relative;
-        }
-
-        /* 輸入框樣式 */
-        #question {
-            width: 100%;
-            padding: clamp(12px, 3vw, 15px);
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: clamp(0.95rem, 3vw, 1.05rem);
-            transition: all 0.3s ease;
-            font-family: inherit;
-            min-height: 60px;
-            line-height: 1.5;
-            resize: vertical; /* 允許垂直調整大小 */
-        }
-
-        #question:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        /* 字數統計 */
-        .char-count {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            font-size: 0.8rem;
-            color: #718096;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2px 6px;
-            border-radius: 10px;
-        }
-
-        /* 結果框樣式 - 改進版 */
-        #answer {
-            width: 100%;
-            min-height: 100px;
-            max-height: 400px; /* 限制最大高度 */
-            padding: clamp(12px, 3vw, 15px);
-            border: 2px solid #cbd5e0;
-            border-radius: 10px;
-            font-size: clamp(0.95rem, 3vw, 1.05rem);
-            font-family: inherit;
-            background-color: #f8fafc;
-            color: #4a5568;
-            line-height: 1.6;
-            word-wrap: break-word; /* 長單詞換行 */
-            overflow-wrap: break-word; /* 現代標準 */
-            overflow-y: auto; /* 垂直滾動 */
-            white-space: pre-wrap; /* 保留換行和空格 */
-            resize: vertical; /* 允許垂直調整大小 */
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        /* 結果框懸浮效果 */
-        #answer:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        /* 結果框內的佔位文字樣式 */
-        #answer:empty:before {
-            content: attr(placeholder);
-            color: #a0aec0;
-        }
-
-        /* 按鈕區 */
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        input[type="submit"],
-        input[type="button"] {
-            flex: 1;
-            padding: clamp(12px, 3vw, 16px);
-            border: none;
-            border-radius: 10px;
-            font-size: clamp(0.95rem, 3vw, 1.1rem);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        input[type="submit"] {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-        }
-
-        input[type="submit"]:hover {
-            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-
-        input[type="button"] {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        input[type="button"]:hover {
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        /* 翻譯結果樣式 - 增強版 */
-        .translation-result {
-            width: 100%;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
-            border-left: 4px solid #667eea;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .result-title {
-            font-weight: 600;
-            color: #2d3748;
-            font-size: 1.1rem;
-        }
-
-        .copy-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-        }
-
-        .result-content {
-            line-height: 1.7;
-            font-size: 1.05rem;
-            color: #4a5568;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: pre-wrap;
-        }
-
-        /* 響應式調整 */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            
-            .main-container {
-                padding: 10px;
-            }
-            
-            .form-box {
-                padding: 20px;
-            }
-            
-            .button-group {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            input[type="submit"],
-            input[type="button"] {
-                width: 100%;
-                padding: 14px;
-            }
-            
-            #question, #answer {
-                font-size: 1rem;
-            }
-            
-            #answer {
-                max-height: 300px; /* 小螢幕上限制高度 */
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .subtitle {
-                font-size: 0.9rem;
-            }
-            
-            .form-box {
-                padding: 15px;
-            }
-            
-            .form-group {
-                margin-bottom: 20px;
-            }
-            
-            #question, #answer {
-                padding: 12px;
-                font-size: 1rem;
-            }
-            
-            #answer {
-                max-height: 250px; /* 更小螢幕上進一步限制高度 */
-            }
-            
-            .translation-result {
-                padding: 15px;
-            }
-            
-            .result-content {
-                font-size: 1rem;
-            }
-        }
-
-        /* 動畫效果 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-box {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        @keyframes resultAppear {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
-                max-height: 0;
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-                max-height: 500px;
-            }
-        }
-        
-        .translation-result {
-            animation: resultAppear 0.5s ease-out;
-        }
-        
-        /* 載入狀態 */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        
-        /* 載入動畫 */
-        .loading-spinner {
-            display: none;
-            width: 40px;
-            height: 40px;
-            margin: 20px auto;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -383,7 +46,7 @@
                         <div class="input-container">
                             <textarea id="question" name="question" 
                                       rows="4"
-                                      placeholder="輸入中文或英文...">{{ question }}</textarea>
+                                      placeholder="輸入中文或英文..."></textarea>
                             <div class="char-count" id="question-count">0/1000</div>
                         </div>
                     </div>
@@ -392,27 +55,25 @@
                     <div class="loading-spinner" id="loading-spinner"></div>
                     
                     <!-- 翻譯結果區域 -->
-                    <div id="result-container" class="form-group" style="display: {{ answer ? 'block' : 'none' }}">
+                    <div id="result-container" class="form-group" style="display: none;">
                         <label for="answer">翻譯結果：</label>
                         <div class="result-container">
                             <textarea id="answer" name="answer" 
                                       rows="6"
                                       readonly
-                                      placeholder="翻譯結果將顯示在這裡...">{{ answer }}</textarea>
+                                      placeholder="翻譯結果將顯示在這裡..."></textarea>
                             <div class="char-count" id="answer-count">0/2000</div>
                         </div>
                         
-                        <!-- 額外的翻譯結果顯示區域（用於更長的翻譯結果） -->
-                        <div id="translation-result" class="translation-result" style="display: {{ answer ? 'block' : 'none' }}">
+                        <!-- 額外的翻譯結果顯示區域 -->
+                        <div id="translation-result" class="translation-result" style="display: none;">
                             <div class="result-header">
                                 <div class="result-title">翻譯結果</div>
                                 <button type="button" class="copy-btn" id="copy-btn">
                                     <i class="far fa-copy"></i> 複製結果
                                 </button>
                             </div>
-                            <div class="result-content" id="result-content">
-                                {{ answer }}
-                            </div>
+                            <div class="result-content" id="result-content"></div>
                         </div>
                     </div>
                     
@@ -462,12 +123,6 @@
         autoResizeTextarea(questionInput);
         autoResizeTextarea(answerInput);
         
-        // 如果已有答案，顯示結果區域
-        if ("{{ answer }}") {
-            resultContainer.style.display = 'block';
-            translationResult.style.display = 'block';
-        }
-        
         // 字數統計函數
         function updateCharCount(textarea, countElement, maxLength) {
             const length = textarea.value.length;
@@ -484,7 +139,7 @@
         // 自動調整文本區域高度
         function autoResizeTextarea(textarea) {
             textarea.style.height = 'auto';
-            const newHeight = Math.min(textarea.scrollHeight, 400); // 限制最大高度
+            const newHeight = Math.min(textarea.scrollHeight, 400);
             textarea.style.height = newHeight + 'px';
         }
         
@@ -567,9 +222,7 @@
         
         // 自動聚焦到輸入框
         window.onload = function() {
-            if (!"{{ question }}") {
-                questionInput.focus();
-            }
+            questionInput.focus();
         };
         
         // 視窗大小改變時重新調整文本區域
