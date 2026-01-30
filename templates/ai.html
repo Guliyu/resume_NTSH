@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         function getResponse() {
-    var input = document.getElementById("userInput").value;
-        }
+            var input = document.getElementById("userInput").value;
     
-        if (input.trim() === "") {
-        document.getElementById("response").innerHTML = 
-            `<div class="ai-response error">
-                <div class="ai-header">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span>輸入錯誤</span>
-                </div>
-                <p>請輸入一些內容來獲得AI的回應！</p>
-            </div>`;
-        return;
+            if (input.trim() === "") {
+                document.getElementById("response").innerHTML = 
+                    `<div class="ai-response error">
+                        <div class="ai-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>輸入錯誤</span>
+                        </div>
+                        <p>請輸入一些內容來獲得AI的回應！</p>
+                    </div>`;
+            return;
+            }
         }
     
     // 顯示思考動畫
