@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 # 從 Render 環境變數抓 Key
-MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY")
+MISTRAL_API_KEY = os.environ.get("MISTRAL_API_KEY", "").strip()
 
 # --- 2. 路由處理 (Routing Logic) ---
 
@@ -37,7 +37,6 @@ def electives():
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
-    print(f"DEBUG: Key 存在嗎? {MISTRAL_API_KEY is not None}") # 去 Render Logs 看這行
     if request.method == 'GET':
         return render_template('ai.html')
     
@@ -50,8 +49,9 @@ def ai():
 
     url = "https://api.mistral.ai/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {MISTRAL_API_KEY}",
-        "Content-Type": "application/json"
+        "Authorization": f"Bearer {MISTRAL_API_KEY.strip()}", # 順手 strip() 防止空格
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
     
     about_me = """
@@ -76,14 +76,18 @@ def ai():
         
         # 如果 Mistral 給了錯誤代碼 (比如 401 密鑰錯, 429 沒錢了)
         if response.status_code != 200:
-            return jsonify({"answer": f"Mistral API 傳回錯誤：{response.status_code} - {response.text}"})
+            return jsonify({
+                "answer": f"Mistral API 傳回錯誤：{response.status_code} - {response.text}"})
             
         result = response.json()
         answer = result['choices'][0]['message']['content']
         return jsonify({"answer": answer})
+    except requests.exceptions.RequestException as e:
+        # 如果是連線超時或網路問題，會跑到這裡
+        return jsonify({"answer": f"連線到 AI 服務器超時，請再試一次。詳細訊息：{str(e)}"}), 200
     except Exception as e:
-        # 強制回傳 JSON 格式，且狀態碼給 200，讓前端能顯示出這行字
-        return jsonify({"answer": f"後端連線異常：{str(e)}"}), 200
+        # 其他雜項錯誤
+        return jsonify({"answer": f"系統發生意外：{str(e)}"}), 200
 
 # 網頁 '/ask' 的處理：這是處理 POST 請求的核心
 @app.route('/ask', methods=['GET', 'POST'])
