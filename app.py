@@ -37,6 +37,7 @@ def electives():
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
+    print(f"DEBUG: Key 存在嗎? {MISTRAL_API_KEY is not None}") # 去 Render Logs 看這行
     if request.method == 'GET':
         return render_template('ai.html')
     
@@ -70,14 +71,19 @@ def ai():
     }
 
     try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
+        # 加一個 timeout 防止無限等待
+        response = requests.post(url, headers=headers, json=payload, timeout=10)
+        
+        # 如果 Mistral 給了錯誤代碼 (比如 401 密鑰錯, 429 沒錢了)
+        if response.status_code != 200:
+            return jsonify({"answer": f"Mistral API 傳回錯誤：{response.status_code} - {response.text}"})
+            
         result = response.json()
         answer = result['choices'][0]['message']['content']
         return jsonify({"answer": answer})
     except Exception as e:
-        return jsonify({"answer": f"哎呀，AI 鬧脾氣了：{str(e)}"})
-
+        # 強制回傳 JSON 格式，且狀態碼給 200，讓前端能顯示出這行字
+        return jsonify({"answer": f"後端連線異常：{str(e)}"}), 200
 
 # 網頁 '/ask' 的處理：這是處理 POST 請求的核心
 @app.route('/ask', methods=['GET', 'POST'])
