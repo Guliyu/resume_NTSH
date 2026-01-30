@@ -6,11 +6,14 @@
     <title>AI應用 | 互動頁面</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        function getResponse() {
-            var input = document.getElementById("userInput").value;
-    
-            if (input.trim() === "") {
-                document.getElementById("response").innerHTML = 
+    function getResponse() {
+        var input = document.getElementById("userInput").value;
+
+        // 1. 檢查輸入是否為空
+        if (input.trim() === "") {
+            const responseArea = document.getElementById("response");
+            if (responseArea) {
+                responseArea.innerHTML = 
                     `<div class="ai-response error">
                         <div class="ai-header">
                             <i class="fas fa-exclamation-triangle"></i>
@@ -18,75 +21,78 @@
                         </div>
                         <p>請輸入一些內容來獲得AI的回應！</p>
                     </div>`;
-            return;
             }
+            return;
         }
-    
-    // 顯示思考動畫
-    document.getElementById("response").innerHTML = 
-        `<div class="ai-response thinking">
-            <div class="ai-header">
-                <i class="fas fa-brain"></i>
-                <span>AI思考中...</span>
-            </div>
-            <div class="thinking-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>`;
-    
-    // 發送到後端 AI API
-    fetch('/ai', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            question: input
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // 成功收到回應
+
+        // 2. 顯示思考動畫 (這原本在外面，我把它搬進來了)
         document.getElementById("response").innerHTML = 
-            `<div class="ai-response">
+            `<div class="ai-response thinking">
                 <div class="ai-header">
-                    <i class="fas fa-robot"></i>
-                    <span>AI 回應</span>
-                    <span class="ai-tag">深度分析</span>
+                    <i class="fas fa-brain"></i>
+                    <span>AI思考中...</span>
                 </div>
-                <p>${data.answer}</p>
-                <div class="ai-footer">
-                    <div class="confidence">
-                        <span>分析置信度:</span>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: ${85 + Math.random() * 10}%"></div>
-                        </div>
-                    </div>
-                    <div class="timestamp">
-                        <i class="far fa-clock"></i>
-                        <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
-                    </div>
+                <div class="thinking-dots">
+                    <span></span><span></span><span></span>
                 </div>
             </div>`;
-    })
-        
-        // 按Enter鍵送出
-        function handleKeyPress(event) {
-            if (event.keyCode === 13) {
-                getResponse();
-            }
+
+        // 3. 發送到後端 AI API (這原本也在外面)
+        fetch('/ai', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                question: input
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 成功收到回應
+            document.getElementById("response").innerHTML = 
+                `<div class="ai-response">
+                    <div class="ai-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI 回應</span>
+                        <span class="ai-tag">深度分析</span>
+                    </div>
+                    <p>${data.answer}</p>
+                    <div class="ai-footer">
+                        <div class="confidence">
+                            <span>分析置信度:</span>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: ${85 + Math.random() * 10}%"></div>
+                            </div>
+                        </div>
+                        <div class="timestamp">
+                            <i class="far fa-clock"></i>
+                            <span>${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}</span>
+                        </div>
+                    </div>
+                </div>`;
+        })
+        .catch(err => {
+            console.error("發生錯誤：", err);
+            document.getElementById("response").innerHTML = "連線失敗，請檢查後端服務。";
+        });
+    } // <--- getResponse 的門現在關在正確的地方了！
+
+    // 按Enter鍵送出
+    function handleKeyPress(event) {
+        if (event.keyCode === 13) {
+            getResponse();
         }
+    }
+
+    // 載入時添加示例問題
+    window.onload = function() {
+        const examples = [
+            "你好請問你為什麼想讀這個專業？"
+        ];
         
-        // 載入時添加示例問題
-        window.onload = function() {
-            const examples = [
-                "你好請問你為什麼想讀這個專業？"
-            ];
-            
-            const exampleElement = document.getElementById("examples");
-            console.log(exampleElement);
+        const exampleElement = document.getElementById("examples");
+        if (exampleElement) {
             examples.forEach(example => {
                 const span = document.createElement("span");
                 span.className = "example";
@@ -96,8 +102,9 @@
                 };
                 exampleElement.appendChild(span);
             });
-        };
-    </script>
+        }
+    };
+</script>
     <style>
         /* 基礎樣式與變數 */
         :root {
