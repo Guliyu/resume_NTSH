@@ -61,7 +61,7 @@ def ai():
     - 動機：貴校科系完全符合我的興趣與能力，期待在此深度學習
     """
 
-    data = {
+    payload = {
         "model": "mistral-small-latest",
         "messages": [
             {"role": "system", "content": about_me},
@@ -70,7 +70,7 @@ def ai():
     }
 
     try:
-        response = requests.post(url, headers=headers, json=data)
+        response = requests.post(url, headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
         answer = result['choices'][0]['message']['content']
