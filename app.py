@@ -49,7 +49,7 @@ def ai():
 
     url = "https://api.mistral.ai/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {MISTRAL_API_KEY.strip()}", # 順手 strip() 防止空格
+        "Authorization": f"Bearer {MISTRAL_API_KEY.strip()}",
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
