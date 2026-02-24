@@ -13,11 +13,11 @@
             /* 選擇一個清晰的字體 */
             font-family: 'Helvetica Neue', Arial, sans-serif;
             /* 使用響應式內距 */
+            box-sizing: border-box
             padding: clamp(15px, 4vw, 30px);
             line-height: 1.6;
             min-height: 100vh;
             margin: 0;
-            box-sizing: border-box;
             
             /* 使用 Flexbox 讓內容垂直居中 */
             display: flex;
@@ -29,6 +29,7 @@
         /* 主容器，限制最大寬度 */
         .content-container {
             width: 100%;
+            max-width: 800xp;
             text-align: center;  /* 這只影響文字，不影響 block 圖片 */
             padding: 20px;
             margin: 0 auto;  /* ！！這個才是讓容器置中的關鍵 */
