@@ -30,8 +30,9 @@
         .content-container {
             width: 100%;
             max-width: 800px;
-            text-align: center;
+            text-align: center;  /* 這只影響文字，不影響 block 圖片 */
             padding: 20px;
+            margin: 0 auto;  /* ！！這個才是讓容器置中的關鍵 */
         }
 
         /* 標題：讓它有被重視的感覺 - 響應式設計 */
@@ -168,6 +169,10 @@
                 font-size: 1.05rem;
                 padding: 14px 28px;
             }
+            img {
+                margin: 0 auto;
+                display: block;
+            }
         }
 
         /* 電腦大螢幕優化 (大於1200px) */
@@ -193,9 +198,9 @@
                 padding: 16px 35px;
             }
             img {
-                width: 60%;        /* 有寬度 */
-                margin: 0 auto;    /* 有置中 */
-                display: block;    /* 確認是 block */
+                width: 60%;
+                margin: 0 auto;
+                display: block;
             }
         }
     </style>
