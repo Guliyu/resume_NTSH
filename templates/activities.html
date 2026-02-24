@@ -120,128 +120,6 @@
             .content-container {
                 padding: 15px;
             }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>課外活動</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        /* 設定整個頁面的基礎：背景和字體 */
-        body {
-            /* 柔和的米白色背景，像是一段溫和關係的開始 */
-            background-color: #f8f8f2; 
-            /* 讓文字顏色不要太黑，顯得柔和一些 */
-            color: #333; 
-            /* 選擇一個清晰的字體 */
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            /* 使用響應式內距 */
-            padding: clamp(15px, 4vw, 30px);
-            line-height: 1.6;
-            min-height: 100vh;
-            margin: 0;
-            box-sizing: border-box;
-            
-            /* 使用 Flexbox 讓內容垂直居中 */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* 主容器，限制最大寬度 */
-        .content-container {
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* 標題：讓它有被重視的感覺 - 響應式設計 */
-        h1 {
-            /* 採用深沉但溫暖的藍色，代表思考與深度 */
-            color: #4a5a70; 
-            text-align: center;
-            border-bottom: 2px solid #b0c4de; /* 加上淺淺的線條 */
-            padding-bottom: clamp(8px, 2vw, 10px);
-            margin-bottom: clamp(20px, 4vw, 25px);
-            
-            /* 響應式字體大小 */
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            font-weight: 700;
-            
-            /* 確保標題不會太寬 */
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* 內容段落：置中顯示，看起來更舒服 - 響應式設計 */
-        p {
-            text-align: center;
-            margin-bottom: clamp(25px, 5vw, 40px);
-            
-            /* 響應式字體大小 */
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            line-height: 1.7;
-            
-            /* 響應式內距 */
-            padding: 0 clamp(10px, 4vw, 20px);
-            color: #444;
-        }
-
-        /* 連結/按鈕：賦予它熱情和行動力 - 響應式設計 */
-        a {
-            /* 移除預設底線 */
-            text-decoration: none; 
-            /* 變成像一個充滿希望的按鈕 */
-            display: inline-block;
-            padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 30px);
-            
-            /* 選擇一個像初戀般**熱情**的粉紅色系 */
-            background: linear-gradient(135deg, #ff69b4 0%, #ff8ac8 100%); 
-            color: white;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            
-            /* 響應式字體大小 */
-            font-size: clamp(0.95rem, 3vw, 1.1rem);
-            font-weight: 600;
-            
-            /* 按鈕陰影 */
-            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
-            border: none;
-            cursor: pointer;
-            
-            /* 確保按鈕易於點擊 */
-            min-width: 120px;
-            text-align: center;
-        }
-
-        /* 滑鼠移上去時的變化，代表互動的瞬間 */
-        a:hover {
-            background: linear-gradient(135deg, #e34c98 0%, #ff69b4 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 18px rgba(255, 105, 180, 0.4);
-        }
-
-        /* 觸控設備優化 */
-        @media (hover: none) {
-            a:active {
-                background: linear-gradient(135deg, #e34c98 0%, #ff69b4 100%);
-                transform: translateY(-1px);
-            }
-        }
-
-        /* 手機專用調整 (小於480px) */
-        @media (max-width: 480px) {
-            body {
-                padding: 20px 15px;
-                justify-content: flex-start;
-                padding-top: 60px;
-            }
-            
-            .content-container {
-                padding: 15px;
-            }
             
             h1 {
                 font-size: 1.6rem;
@@ -311,6 +189,8 @@
     <div class="content-container">
         <h1>課外活動</h1>
         <p>這裡展示我參加的課外活動與受訓經驗，每段經歷都是成長的累積。</p>
+        <p>圖片是測試↓</p>
+        <img src="https://i.pinimg.com/originals/cc/50/63/cc506354d3bd16a508b013e1bc037a96.jpg">
         <a href="/">返回首頁</a>
     </div>
 </body>
